@@ -10,10 +10,10 @@
       rel="stylesheet"
     />
     <link
-      rel="preload"
+      rel="stylesheet"
       href="/css/styles.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
+      media="print"
+      onload="this.media='all'; this.onload=null;"
     />
     <noscript><link rel="stylesheet" href="/css/styles.css" /></noscript>
     <!-- Google Tag Manager -->
@@ -37,7 +37,7 @@
       src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js"
       charset="UTF-8"
     ></script>
-    <script type="text/javascript" charset="UTF-8">
+    <script type="text/javascript" charset="UTF-8" defer>
       cookieconsent.run({
         notice_banner_type: "simple",
         consent_type: "express",
@@ -80,7 +80,13 @@
             <li><a href="index.html#best-sellers-section">Best Sellers</a></li>
             <li><a href="index.html#newsletter-section">Newsletter</a></li>
             <li class="menu-icon">
-              <img src="images/menu_icon.png" loading="lazy" />
+              <button class="menu-icon" aria-label="Open Menu">
+                <img
+                  src="images/menu_icon.png"
+                  loading="lazy"
+                  alt="Menu Icon"
+                />
+              </button>
             </li>
           </ul>
         </nav>
@@ -141,6 +147,8 @@
                 <source srcset="images/vr1.webp" type="image/webp" />
                 <img
                   src="images/vr1.jpg"
+                  width="370"
+                  height="150"
                   loading="lazy"
                   alt="product: Penom Case"
                 />
@@ -162,6 +170,8 @@
                 <source srcset="images/vr2.webp" type="image/webp" />
                 <img
                   src="images/vr2.jpg"
+                  width="370"
+                  height="150"
                   loading="lazy"
                   alt="product: Noise Cancelling Headphone"
                 />
@@ -183,6 +193,8 @@
                 <source srcset="images/vr3.webp" type="image/webp" />
                 <img
                   src="images/vr3.jpg"
+                  width="370"
+                  height="150"
                   loading="lazy"
                   alt="product: Canon Digital SLR EOS Rebel T6"
                 />
