@@ -9,8 +9,13 @@
       href="https://fonts.googleapis.com/css?family=Heebo:300,400,600,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="/css/slick.css"/> -->
+    <link
+      rel="preload"
+      href="/css/styles.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="/css/styles.css" /></noscript>
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -259,7 +264,7 @@
 
     <a href="#" id="open_preferences_center">Update cookies preferences</a>
 
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/products.js"></script>
+    <script type="text/javascript" src="/js/main.js" defer></script>
+    <script type="text/javascript" src="/js/products.js" defer></script>
   </body>
 </html>

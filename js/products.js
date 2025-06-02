@@ -62,7 +62,12 @@ function displayProducts(products) {
 
 loadProducts();
 
-// Simulate heavy operation. It could be a complex price calculation.
-for (let i = 0; i < 10000000; i++) {
-  const temp = Math.sqrt(i) * Math.sqrt(i);
-}
+const worker = new Worker("js/worker.js");
+
+worker.postMessage(10000000);
+
+worker.onmessage = function (e) {
+  if (e.data === "done") {
+    console.log("Heavy operation completed.");
+  }
+};
