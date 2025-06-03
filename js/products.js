@@ -1,20 +1,37 @@
-async function loadProducts() {
+let allProducts = [];
+let currentPage = 1;
+const productsPerPage = 8;
+let isLoading = false;
+
+async function fetchProducts() {
   const response = await fetch("https://fakestoreapi.com/products");
-  const products = await response.json();
-  displayProducts(products);
+  allProducts = await response.json();
+  loadProducts();
+}
+
+function loadProducts() {
+  if (isLoading) {
+    return;
+  }
+  isLoading = true;
+
+  const start = (currentPage - 1) * productsPerPage;
+  const end = currentPage * productsPerPage;
+  const productsToShow = allProducts.slice(start, end);
+
+  displayProducts(productsToShow);
+  currentPage++;
+
+  isLoading = false;
 }
 
 function displayProducts(products) {
-  // Find the container where products will be displayed
   const container = document.querySelector("#all-products .container");
 
-  // Iterate over each product and create the HTML structure safely
   products.forEach((product) => {
-    // Create the main product div
     const productElement = document.createElement("div");
     productElement.classList.add("product");
 
-    // Create the product picture div
     const pictureDiv = document.createElement("div");
     pictureDiv.classList.add("product-picture");
     const img = document.createElement("img");
@@ -24,7 +41,6 @@ function displayProducts(products) {
     img.loading = "lazy";
     pictureDiv.appendChild(img);
 
-    // Create the product info div
     const infoDiv = document.createElement("div");
     infoDiv.classList.add("product-info");
 
@@ -45,29 +61,30 @@ function displayProducts(products) {
     const button = document.createElement("button");
     button.textContent = "Add to bag";
 
-    // Append elements to the product info div
     infoDiv.appendChild(category);
     infoDiv.appendChild(title);
     infoDiv.appendChild(price);
     infoDiv.appendChild(button);
 
-    // Append picture and info divs to the main product element
     productElement.appendChild(pictureDiv);
     productElement.appendChild(infoDiv);
 
-    // Append the new product element to the container
     container.appendChild(productElement);
   });
 }
 
-loadProducts();
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.body.offsetHeight;
 
-const worker = new Worker("js/worker.js");
+  if (scrollTop + windowHeight >= documentHeight - 100) {
+    loadProducts();
 
-worker.postMessage(10000000);
-
-worker.onmessage = function (e) {
-  if (e.data === "done") {
-    console.log("Heavy operation completed.");
+    for (let i = 0; i < 10000000; i++) {
+      const temp = Math.sqrt(i) * Math.sqrt(i);
+    }
   }
-};
+});
+
+fetchProducts();
