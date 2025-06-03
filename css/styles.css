@@ -685,6 +685,10 @@ footer .copyright-text {
     margin: 60px auto;
   }
 
+  section.newsletter form .visually-hidden {
+    display: none;
+  }
+
   section.newsletter form input {
     max-width: 65%;
   }
