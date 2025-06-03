@@ -1,7 +1,28 @@
-async function loadProducts() {
+let allProducts = [];
+let currentPage = 1;
+const productsPerPage = 8;
+let isLoading = false;
+
+async function fetchProducts() {
   const response = await fetch("https://fakestoreapi.com/products");
-  const products = await response.json();
-  displayProducts(products);
+  allProducts = await response.json();
+  loadProducts();
+}
+
+function loadProducts() {
+  if (isLoading) {
+    return;
+  }
+  isLoading = true;
+
+  const start = (currentPage - 1) * productsPerPage;
+  const end = currentPage * productsPerPage;
+  const productsToShow = allProducts.slice(start, end);
+
+  displayProducts(productsToShow);
+  currentPage++;
+
+  isLoading = false;
 }
 
 function displayProducts(products) {
@@ -52,25 +73,18 @@ function displayProducts(products) {
   });
 }
 
-window.onload = () => {
-  let status = "idle";
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.body.offsetHeight;
 
-  let productSection = document.querySelector("#all-products");
+  if (scrollTop + windowHeight >= documentHeight - 100) {
+    loadProducts();
 
-  window.onscroll = () => {
-    let position =
-      productSection.getBoundingClientRect().top -
-      (window.scrollY + window.innerHeight);
-
-    if (status == "idle" && position <= 0) {
-      loadProducts();
-
-      // Simulate heavy operation. It could be a complex price calculation. <-- need to improve this
-      // This is a blocking operation that will freeze the UI
-      // how to improve this: https://ko.javascript.info/event-loop <-- use event loop
-      for (let i = 0; i < 10000000; i++) {
-        const temp = Math.sqrt(i) * Math.sqrt(i);
-      }
+    for (let i = 0; i < 10000000; i++) {
+      const temp = Math.sqrt(i) * Math.sqrt(i);
     }
-  };
-};
+  }
+});
+
+fetchProducts();
